@@ -8,3 +8,20 @@
     border-width: 2px 0px 0px 0px;
     margin-top: 5px;
 }
+
+.nameCell {
+    width: 120px;
+}
+
+.searchCell {
+    width: 120px;
+}
+
+.actionCell {
+    width: 120px;
+}
+
+.statusCell .itemStatus {
+    width: 120px;
+    text-align: center;
+}

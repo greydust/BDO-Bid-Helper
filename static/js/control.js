@@ -56,14 +56,14 @@ function AddItemInTable(name, search) {
     var actionTd = tr.appendChild(document.createElement("td"));
     
     var newButton = actionTd.appendChild(document.createElement("button"));
-    newButton.innerHTML = "New";
+    newButton.innerHTML = "上架";
     newButton.className = "newButton";
     newButton.onclick = function() {
         NewInstance(name);
     };
     
     var deleteButton = actionTd.appendChild(document.createElement("button"));
-    deleteButton.innerHTML = "Delete";
+    deleteButton.innerHTML = "刪除";
     deleteButton.className = "deleteButton";
     deleteButton.onclick = function () {
         DeleteItem(name);
@@ -76,7 +76,7 @@ function AddItem() {
     var name = nameInput.value;
     var search = searchInput.value;
     if (IsRealValue(items[name])) {
-        items[name].searchPattern = search;
+        items[name].search = search;
         
         var itemSearch = items[name].tr.getElementsByClassName("itemSearch");
         itemSearch[0].innerHTML = search;
@@ -97,26 +97,43 @@ function AddItem() {
         items[name] = new AuctionItem(name, search, tr);
     }
     
+    nameInput.value = "";
+    searchInput.value = "";
+    
     BakeCookie("items", items);
+}
+
+function CopyToClipboard(str) {
+    window.prompt("複製此字串", str);
 }
 
 function NewInstance(itemName) {
     var tr = itemInstanceBody.appendChild(document.createElement("tr"));
     tr.className = "itemInstance";
     tr.data = new AuctionItemInstance(items[itemName].name, items[itemName].search, Date.now());
-    
+
     var nameTd = tr.appendChild(document.createElement("td"));
     nameTd.innerHTML = tr.data.name;
     nameTd.className = "itemName";
+
+    var searchTd = tr.appendChild(document.createElement("td"));
+    searchTd.innerHTML = tr.data.search;
+    searchTd.className = "itemSearch";
+
+    var actionTd = tr.appendChild(document.createElement("td"));
+    actionTd.className = "itemAction";
+    
+    var copyButton = actionTd.appendChild(document.createElement("button"));
+    copyButton.innerHTML = "複製搜尋字串";
+    copyButton.className = "copyButton";
+    copyButton.onclick = function () {
+        CopyToClipboard(items[itemName].search);
+    };
    
-   var searchTd = tr.appendChild(document.createElement("td"));
-   searchTd.innerHTML = tr.data.search;
-   searchTd.className = "itemSearch";
-   
-   var statusTd = tr.appendChild(document.createElement("td"));
-   statusTd.className = "itemStatus";
-   
-   RefreshItemInformation();
+    var statusTd = tr.appendChild(document.createElement("td"));
+    statusTd.className = "itemStatus";
+
+    RefreshItemInformation();
 }
 
 function DeleteItem(itemName) {

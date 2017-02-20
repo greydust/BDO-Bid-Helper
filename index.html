@@ -7,18 +7,18 @@
         <link rel="stylesheet" type="text/css" href="static/css/common.css" media="screen">
     </head>
     <body>
-        <div id="topView" >
+        <div id="topView">
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 40%">
-                            Name
+                        <th class="nameCell">
+                            名稱
                         </th>
-                        <th style="width: 40%">
-                            Search Phrase
+                        <th class="searchCell">
+                            搜尋字串
                          </th>
-                         <th style="width: 20%">
-                            Actions
+                         <th class="actionCell">
+                            操作
                          </th>
                     </tr>
                 </thead>
@@ -26,14 +26,14 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td>
-                            <input id="nameInput" type="text"/>
+                        <td class="actionCell">
+                            <input class="nameCell" id="nameInput" type="text"/>
                         </td>
-                        <td>
-                            <input id="searchInput" type="text"/>
+                        <td class="actionCell">
+                            <input class="searchCell" id="searchInput" type="text"/>
                         </td>
-                        <td>
-                            <button id="add" type="text" onclick="AddItem()">Add</button>
+                        <td class="actionCell">
+                            <button id="add" type="text" onclick="AddItem()">新增</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -43,14 +43,17 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 30%">
-                            Name
+                        <th class="nameCell">
+                            名稱
                         </th>
-                        <th style="width: 30%">
-                            Search Phrase
+                        <th class="searchCell">
+                            搜尋字串
                          </th>
-                         <th style="width: 40%">
-                            Status
+                         <th class="actionCell">
+                            操作
+                         </th>
+                         <th class="statusCell">
+                            狀態
                          </th>
                     </tr>
                 </thead>
