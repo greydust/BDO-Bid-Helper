@@ -1,0 +1,10 @@
+#topView {
+   height: 50%;
+}
+
+#bottomView {
+    height: 50%;
+    border-style: solid;
+    border-width: 2px 0px 0px 0px;
+    margin-top: 5px;
+}
