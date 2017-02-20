@@ -110,7 +110,7 @@ function DeleteItem(itemName) {
 function Notify(itemInstance) {
     var notification = new Notification('BDO Bid Helper', {
         icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-        body: itemInstance.name + " ³o¤£¬O¨Ó¤F¶Ü.",
+        body: itemInstance.name + " é€™ä¸æ˜¯ä¾†äº†å—.",
     });
 
     notification.onclick = function () {
