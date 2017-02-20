@@ -1,3 +1,14 @@
+function BakeCookie(name, value) {
+    var cookie = [name, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
+    document.cookie = cookie;
+}
+
+function ReadCookie(name) {
+    var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
+    result && (result = JSON.parse(result[1]));
+    return result;
+}
+
 var nameInput = document.getElementById("nameInput");
 var searchInput = document.getElementById("searchInput");
 var itemDeclarationBody = document.getElementById("itemDeclarationBody");
@@ -16,8 +27,6 @@ function AuctionItemInstance(name, search, time) {
     this.notification = false;
 }
 
-var items = {};
-
 function IsRealValue(obj)
 {
     return obj && obj !== 'null' && obj !== 'undefined';
@@ -31,6 +40,34 @@ function MsToTime(t) {
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
     return minutes + ":" + seconds;
+}
+
+function AddItemInTable(name, search) {
+    var tr = itemDeclarationBody.appendChild(document.createElement("tr"));
+        
+    var nameTd = tr.appendChild(document.createElement("td"));
+    nameTd.innerHTML = name;
+    nameTd.className = "itemName";
+    
+    var searchTd = tr.appendChild(document.createElement("td"));
+    searchTd.innerHTML = search
+    searchTd.className = "itemSearch";
+    
+    var actionTd = tr.appendChild(document.createElement("td"));
+    
+    var newButton = actionTd.appendChild(document.createElement("button"));
+    newButton.innerHTML = "New";
+    newButton.className = "newButton";
+    newButton.onclick = function() {
+        NewInstance(name);
+    };
+    
+    var deleteButton = actionTd.appendChild(document.createElement("button"));
+    deleteButton.innerHTML = "Delete";
+    deleteButton.className = "deleteButton";
+    deleteButton.onclick = function () {
+        DeleteItem(name);
+    };
 }
 
 function AddItem() {
@@ -53,35 +90,12 @@ function AddItem() {
             }
         }
     } else {
-        var tr = itemDeclarationBody.appendChild(document.createElement("tr"));
-        
-        var nameTd = tr.appendChild(document.createElement("td"));
-        nameTd.innerHTML = name;
-        nameTd.className = "itemName";
-        
-        var searchTd = tr.appendChild(document.createElement("td"));
-        searchTd.innerHTML = search
-        searchTd.className = "itemSearch";
-        
-        var actionTd = tr.appendChild(document.createElement("td"));
-        
-        var newButton = actionTd.appendChild(document.createElement("button"));
-        newButton.innerHTML = "New";
-        newButton.className = "newButton";
-        newButton.onclick = function() {
-            NewInstance(name);
-        };
-        
-        var deleteButton = actionTd.appendChild(document.createElement("button"));
-        deleteButton.innerHTML = "Delete";
-        deleteButton.className = "deleteButton";
-        deleteButton.onclick = function () {
-            DeleteItem(name);
-        };
+        var tr = AddItemInTable(name, search);
 
-        
         items[name] = new AuctionItem(name, search, tr);
     }
+    
+    BakeCookie("items", items);
 }
 
 function NewInstance(itemName) {
@@ -142,8 +156,8 @@ function RefreshItemInformation() {
             status[0].style.color = "orange";
             
             if(trs[i].data.notification == false) {
-                Notify(trs[i].data);
                 trs[i].data.notification = true;
+                Notify(trs[i].data);
             }
         } else if (delta < 540000) {
             status[0].innerHTML = MsToTime(600000 - delta);
@@ -156,3 +170,12 @@ if (Notification.permission !== "granted") {
 }
 
 var t=setInterval(RefreshItemInformation,1000);
+
+var items = ReadCookie("items");
+if(!IsRealValue(items)) {
+    items = {};
+} else {
+    for(var index in items) {
+        AddItemInTable(items[index].name, items[index].search);
+    }
+}
