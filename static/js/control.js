@@ -109,7 +109,7 @@ function DeleteItem(itemName) {
 
 function Notify(itemInstance) {
     var notification = new Notification('BDO Bid Helper', {
-        icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+        icon: "static/image/Gmark.PNG",
         body: itemInstance.name + " 這不是來了嗎.",
     });
 
