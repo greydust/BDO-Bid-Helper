@@ -68,6 +68,8 @@ function AddItemInTable(name, search) {
     deleteButton.onclick = function () {
         DeleteItem(name);
     };
+    
+    return tr;
 }
 
 function AddItem() {
@@ -118,7 +120,9 @@ function NewInstance(itemName) {
 }
 
 function DeleteItem(itemName) {
-    
+    items[itemName].tr.parentNode.removeChild(items[itemName].tr);
+    delete items[itemName];
+    BakeCookie("items", items);
 }
 
 function Notify(itemInstance) {
@@ -176,6 +180,7 @@ if(!IsRealValue(items)) {
     items = {};
 } else {
     for(var index in items) {
-        AddItemInTable(items[index].name, items[index].search);
+        var tr = AddItemInTable(items[index].name, items[index].search);
+        items[index].tr = tr;
     }
 }
