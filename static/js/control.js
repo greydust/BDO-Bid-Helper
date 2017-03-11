@@ -129,6 +129,19 @@ function NewInstance(itemName) {
     copyButton.onclick = function () {
         CopyToClipboard(items[itemName].search);
     };
+	
+	var addTimeButton = actionTd.appendChild(document.createElement("button"));
+	addTimeButton.innerHTML = "+";
+	addTimeButton.onclick = function (){
+		tr.data.time += 60000;
+		RefreshItemInformation();
+	}
+	var subtractTimeButton = actionTd.appendChild(document.createElement("button"));
+	subtractTimeButton.innerHTML = "-";
+	subtractTimeButton.onclick = function (){
+		tr.data.time -= 60000;
+		RefreshItemInformation();
+	}
    
     var statusTd = tr.appendChild(document.createElement("td"));
     statusTd.className = "itemStatus";
